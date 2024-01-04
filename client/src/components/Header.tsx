@@ -1,14 +1,27 @@
 // import { ReactComponent as iconMenu } from "./../assets/icon _menu_.svg";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, Dispatch, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import iconMenu from "./../assets/icon_menu.svg";
 import iconWrite from "./../assets/edit_document.svg";
 import iconLogout from "./../assets/logout.svg";
+import { isAccessToken, removeAccessToken } from "../assets/tokenActions";
 
 export interface HeaderProps {
 	isLogin: boolean;
+	setIsLogin: Dispatch<React.SetStateAction<boolean>>;
 }
-const Header = ({ isLogin }: HeaderProps) => {
+const Header = (props: HeaderProps) => {
+	const navigate = useNavigate();
+	useEffect(() => {
+		if (isAccessToken()) props.setIsLogin(true);
+		else props.setIsLogin(false);
+	}, []);
+	const handleLogoutClick = () => {
+		removeAccessToken();
+		props.setIsLogin(false);
+		alert("로그아웃되었습니다.");
+		navigate("/");
+	};
 	return (
 		<header className="header">
 			<button className="button_navi">
@@ -16,7 +29,7 @@ const Header = ({ isLogin }: HeaderProps) => {
 			</button>
 			<h1 className="logo">JB account</h1>
 			<div className="header_button_wrap">
-				{isLogin ? (
+				{props.isLogin ? (
 					<>
 						<a
 							href=""
@@ -26,13 +39,16 @@ const Header = ({ isLogin }: HeaderProps) => {
 							프로필
 						</a>
 						<a
-							href=""
+							href="/board/write"
 							className="header_btns link_write"
 							title="클릭시 글쓰기 페이지로 이동합니다."
 						>
 							<img src={iconWrite} />
 						</a>
-						<button className="header_btns button_logout">
+						<button
+							className="header_btns button_logout"
+							onClick={handleLogoutClick}
+						>
 							<img src={iconLogout} />
 						</button>
 					</>

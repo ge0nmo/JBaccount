@@ -40,6 +40,7 @@ public class CommentService
         if(parentId != null)
         {
             Comment parent = getComment(parentId);
+            checkIfPostHasExactComment(post, parent);
             if(parent.getParent() != null)
             {
                 throw new RuntimeException();
@@ -77,9 +78,9 @@ public class CommentService
 
 
     @Transactional(readOnly = true)
-    public List<CommentMultiResponse> getAllComments(Long postId, Member currentMember, Pageable pageable)
+    public List<CommentMultiResponse> getAllComments(Long postId, Member currentMember)
     {
-        return commentRepository.getAllComments(postId, pageable, currentMember);
+        return commentRepository.getAllComments(postId, currentMember);
     }
 
     @Transactional(readOnly = true)
@@ -104,6 +105,12 @@ public class CommentService
     private Post verifyPost(Long postId)
     {
         return postRepository.findById(postId).orElseThrow(() -> new BusinessLogicException(ExceptionMessage.COMMENT_NOT_FOUND));
+    }
+
+    private void checkIfPostHasExactComment(Post post, Comment comment)
+    {
+        if(comment.getPost() != post)
+            throw new BusinessLogicException(ExceptionMessage.POST_NOT_FOUND);
     }
 
 }

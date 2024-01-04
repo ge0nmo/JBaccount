@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CommentRepositoryCustom
 {
-    List<CommentMultiResponse> getAllComments(Long postId, Pageable pageable, Member currentMember);
+    List<CommentMultiResponse> getAllComments(Long postId, Member currentMember);
 
     //SliceDto<CommentResponseForProfile> getAllCommentsForProfile(Long memberId, Long last, Pageable pageable);
 

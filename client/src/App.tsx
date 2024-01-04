@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Nav from "./components/Nav";
@@ -15,16 +15,20 @@ import UserPage from "./pages/UserPage";
 import UserEdit from "./pages/UserEdit";
 
 function App() {
+	const [isLogin, setIsLogin] = useState(false);
 	return (
 		<div className="App">
 			<Router>
-				<Header isLogin={false} />
+				<Header isLogin={isLogin} setIsLogin={setIsLogin} />
 				<div className="page_wrap">
 					<Nav />
 					<main className="container">
 						<Routes>
 							<Route path="/" element={<Home />} />
-							<Route path="/login" element={<Login />} />
+							<Route
+								path="/login"
+								element={<Login setIsLogin={setIsLogin} />}
+							/>
 							<Route path="/signup" element={<Signup />} />
 							<Route path="/validateEmail" element={<ValidateEmail />} />
 							<Route path="/newPassword" element={<NewPassword />} />

@@ -70,12 +70,11 @@ public class CommentController
         return new ResponseEntity(new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
-    @GetMapping("/{post-id}/comment")
+    @GetMapping("/{post-id}/comments")
     public ResponseEntity getAllComments(@PathVariable("post-id") @Positive Long postId,
-                                         @AuthenticationPrincipal Member currentMember,
-                                         @PageableDefault(size = 8) Pageable pageable)
+                                         @AuthenticationPrincipal Member currentMember)
     {
-        List<CommentMultiResponse> response = commentService.getAllComments(postId, currentMember, pageable);
+        List<CommentMultiResponse> response = commentService.getAllComments(postId, currentMember);
 
         return new ResponseEntity(response, HttpStatus.OK);
     }
@@ -84,7 +83,7 @@ public class CommentController
     public ResponseEntity<PageDto<CommentResponseForProfile>> getAllCommentsForProfile(@PathVariable("member-id") @Positive Long memberId,
                                                    @PageableDefault(size = 8) Pageable pageable)
     {
-        PageDto<CommentResponseForProfile> response = commentService.getAllCommentsForProfile(memberId, pageable);
+        PageDto<CommentResponseForProfile> response = commentService.getAllCommentsForProfile(memberId, pageable.previousOrFirst());
 
         return new ResponseEntity(response, HttpStatus.OK);
     }

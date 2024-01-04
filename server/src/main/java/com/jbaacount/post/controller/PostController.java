@@ -81,7 +81,7 @@ public class PostController
                                                 @RequestParam(required = false) String keyword,
                                                 @PageableDefault(size = 8) Pageable pageable)
     {
-        PageDto<PostMultiResponseDto> response = postService.getAllPostsByCategoryId(categoryId, keyword, pageable);
+        PageDto<PostMultiResponseDto> response = postService.getAllPostsByCategoryId(categoryId, keyword, pageable.previousOrFirst());
 
         return ResponseEntity.ok(response);
     }
@@ -91,7 +91,7 @@ public class PostController
                                                   @RequestParam(required = false) String keyword,
                                                   @PageableDefault(size = 8) Pageable pageable)
     {
-        PageDto<PostMultiResponseDto> response = postService.getAllPostsByBoardId(boardId, keyword, pageable);
+        PageDto<PostMultiResponseDto> response = postService.getAllPostsByBoardId(boardId, keyword, pageable.previousOrFirst());
 
         return ResponseEntity.ok(response);
     }
@@ -101,7 +101,7 @@ public class PostController
     public ResponseEntity<PageDto<PostResponseForProfile>> getAllPostsByMemberId(@PathVariable("member-id") @Positive Long memberId,
                                                 @PageableDefault(size = 8) Pageable pageable)
     {
-        PageDto<PostResponseForProfile> response = postService.getAllPostsByMemberId(memberId, pageable);
+        PageDto<PostResponseForProfile> response = postService.getAllPostsByMemberId(memberId, pageable.previousOrFirst());
 
         return ResponseEntity.ok(response);
     }

@@ -20,7 +20,6 @@ import java.util.*;
 
 import static com.jbaacount.comment.entity.QComment.comment;
 import static com.jbaacount.member.entity.QMember.member;
-import static com.jbaacount.post.entity.QPost.post;
 
 @RequiredArgsConstructor
 public class CommentRepositoryImpl implements CommentRepositoryCustom
@@ -30,30 +29,28 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom
     //private final PaginationUtils paginationUtils;
 
     @Override
-    public List<CommentMultiResponse> getAllComments(Long postId, Pageable pageable, Member member)
+    public List<CommentMultiResponse> getAllComments(Long postId, Member member)
     {
-        List<CommentMultiResponse> fetch = query
+        List<CommentMultiResponse> listComments = query
                 .select(extractCommentDto())
                 .from(comment)
                 .leftJoin(comment.parent)
                 .join(comment.member, QMember.member)
                 .where(comment.post.id.eq(postId))
                 .orderBy(comment.parent.id.asc().nullsFirst(), comment.createdAt.asc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
                 .fetch();
 
 
         Map<Long, CommentMultiResponse> commentMap = new HashMap<>();
-        List<CommentMultiResponse> rootComments = new ArrayList<>();
+        List<CommentMultiResponse> parentComments = new ArrayList<>();
 
-        for (CommentMultiResponse comment : fetch)
+        for (CommentMultiResponse comment : listComments)
         {
             comment.setVoteStatus(checkMemberVotedCommentOrNot(member, comment.getId()));
             commentMap.put(comment.getId(), comment);
 
             if(comment.getParentId() == null)
-                rootComments.add(comment);
+                parentComments.add(comment);
 
             else
             {
@@ -64,7 +61,7 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom
 
         }
 
-        return rootComments;
+        return parentComments;
     }
 
     /*@Override
@@ -92,12 +89,13 @@ public class CommentRepositoryImpl implements CommentRepositoryCustom
                 .from(comment)
                 .where(comment.member.id.eq(memberId))
                 .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
                 .orderBy(comment.id.desc())
                 .fetch();
 
         Long total = query
                 .select(comment.count())
-                .from(post)
+                .from(comment)
                 .where(comment.member.id.eq(memberId))
                 .fetchOne();
 

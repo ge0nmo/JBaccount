@@ -1,7 +1,8 @@
 import boardData from "./../data/boardData.json";
 import { ReactComponent as IconHome } from "./../assets/icon_home.svg";
 import iconArrowDown from "./../assets/icon_arrow_down.svg";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
+import axios from "axios";
 
 const createMenuNode = (data: any[]) => {
 	return data.map((el: any, idx: number) => (
@@ -27,11 +28,22 @@ const createMenuNode = (data: any[]) => {
 
 const clickHandler = (event: React.MouseEvent<HTMLAnchorElement>): void => {
 	event.preventDefault();
-	console.log(event.currentTarget.classList);
 	event.currentTarget.classList.toggle("unfold");
 };
 
 const Nav = () => {
+	const api = process.env.REACT_APP_API_URL;
+	const [data, setData] = useState<any[]>([]);
+	useEffect(() => {
+		axios
+			.get(`${api}/board/all`)
+			.then((response) => {
+				setData(response.data);
+			})
+			.catch((error) => {
+				console.error("에러", error);
+			});
+	}, []);
 	return (
 		<nav className="nav">
 			<div className="home_link">
@@ -40,7 +52,7 @@ const Nav = () => {
 					HOME
 				</a>
 			</div>
-			<ul className="nav_menu depth1">{createMenuNode(boardData)}</ul>
+			<ul className="nav_menu depth1">{createMenuNode(data)}</ul>
 		</nav>
 	);
 };

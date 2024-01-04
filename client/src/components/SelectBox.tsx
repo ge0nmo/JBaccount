@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useState, useRef, useEffect } from "react";
 import "../App.css";
 
@@ -6,9 +6,10 @@ export interface SelectProps {
 	id?: string;
 	selectLabel?: string;
 	isLabel: boolean; //label의 유무를 나타냅니다.
-	selectItem: string[];
+	selectItem?: string[];
 	placeHolder: string;
 	setHandleStatus?: (status: string) => void;
+	children?: ReactNode;
 }
 
 const SelectBox = ({
@@ -18,6 +19,7 @@ const SelectBox = ({
 	selectItem,
 	placeHolder,
 	setHandleStatus,
+	children,
 }: SelectProps) => {
 	const [nowValue, setNowValue] = useState(placeHolder);
 	const [isOpen, setIsOpen] = useState(false);
@@ -71,16 +73,20 @@ const SelectBox = ({
 					{nowValue}
 				</div>
 				<ul className="option_list">
-					{selectItem.map((value, idx) => (
-						<li
-							key={idx}
-							onClick={(event) => {
-								handleClickListItem(event);
-							}}
-						>
-							{value}
-						</li>
-					))}
+					{children
+						? children
+						: selectItem
+						? selectItem.map((value, idx) => (
+								<li
+									key={idx}
+									onClick={(event) => {
+										handleClickListItem(event);
+									}}
+								>
+									{value}
+								</li>
+						  ))
+						: null}
 				</ul>
 			</div>
 		</div>

@@ -1,0 +1,170 @@
+{
+	"data": [
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 3,
+				"nickname": "회원2"
+			},
+			"id": 51,
+			"title": "게시글 테스트3",
+			"content": "12345",
+			"voteCount": 2,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.097212"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 2,
+				"nickname": "회원1"
+			},
+			"id": 50,
+			"title": "게시글 테스트",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.096211"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 4,
+				"nickname": "회원3"
+			},
+			"id": 49,
+			"title": "게시글 테스트2",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.095212"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 2,
+				"nickname": "회원1"
+			},
+			"id": 48,
+			"title": "게시글 테스트",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.094212"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 4,
+				"nickname": "회원3"
+			},
+			"id": 47,
+			"title": "게시글 테스트2",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.093211"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 2,
+				"nickname": "회원1"
+			},
+			"id": 46,
+			"title": "게시글 테스트",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.092213"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 4,
+				"nickname": "회원3"
+			},
+			"id": 45,
+			"title": "게시글 테스트2",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.091211"
+		},
+		{
+			"board": {
+				"id": 1,
+				"name": "첫번째 게시판"
+			},
+			"category": {
+				"id": 1,
+				"name": "카테고리a"
+			},
+			"member": {
+				"id": 2,
+				"nickname": "회원1"
+			},
+			"id": 44,
+			"title": "게시글 테스트",
+			"content": "12345",
+			"voteCount": 0,
+			"commentCount": 0,
+			"createdAt": "2023-11-06T11:26:13.090213"
+		}
+	],
+	"pageInfo": {
+		"page": 2,
+		"size": 8,
+		"totalElements": 31,
+		"totalPages": 13
+	}
+}

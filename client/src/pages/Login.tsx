@@ -1,10 +1,19 @@
+import React, { useState, Dispatch, SetStateAction } from "react";
 import Input from "./../components/Input";
 import Button from "./../components/Button";
 import { validator, ValidatorStatus } from "../assets/validater";
-import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { saveAccessToken } from "../assets/tokenActions";
 
-const Login = () => {
-	const [value, setValue] = useState({
+interface Props {
+	setIsLogin: Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login = (props: Props) => {
+	const api = process.env.REACT_APP_API_URL;
+	const navigate = useNavigate();
+	const [form, setForm] = useState({
 		email: "",
 		password: "",
 	});
@@ -13,34 +22,45 @@ const Login = () => {
 		password: false,
 	});
 	const setEmailValue = (value: string) => {
-		setValue((prevState) => ({
+		setForm((prevState) => ({
 			...prevState,
 			email: value,
 		}));
 	};
 	const setPasswordValue = (value: string) => {
-		setValue((prevState) => ({
+		setForm((prevState) => ({
 			...prevState,
 			password: value,
 		}));
 	};
 	//유효성 검사
 	const validatorStatusEmail: ValidatorStatus = {
-		value: value.email,
+		value: form.email,
 		isRequired: true,
 		valueType: "email",
 	};
 	const validatorStatusPassword: ValidatorStatus = {
-		value: value.password,
+		value: form.password,
 		isRequired: true,
 		valueType: "password",
 	};
-	const handleOnclick = () => {
+	const handleSubmit = () => {
 		setIsError((prevState) => ({
 			...prevState,
 			email: !validator(validatorStatusEmail),
 			password: !validator(validatorStatusPassword),
 		}));
+		if (isError.email || isError.password) return;
+		axios
+			.post(`${api}/members/login`, form, { withCredentials: true })
+			.then((response) => {
+				saveAccessToken(response.headers.authorization);
+				props.setIsLogin(true);
+				navigate("/");
+			})
+			.catch((error) => {
+				console.error("에러", error);
+			});
 	};
 
 	return (
@@ -53,7 +73,7 @@ const Login = () => {
 					errorMsg="올바른 이메일을 입력해 주세요."
 					inputAttr={{ type: "text", placeholder: "이메일을 입력하세요" }}
 					setInputValue={setEmailValue}
-					inputValue={value.email}
+					inputValue={form.email}
 					isError={isError.email}
 				/>
 				<Input
@@ -62,14 +82,14 @@ const Login = () => {
 					errorMsg="올바른 비밀번호를 입력해 주세요."
 					inputAttr={{ type: "password", placeholder: "비밀번호를 입력하세요" }}
 					setInputValue={setPasswordValue}
-					inputValue={value.password}
+					inputValue={form.password}
 					isError={isError.password}
 				/>
 				<Button
 					buttonType="primary"
 					buttonSize="big"
 					buttonLabel="로그인"
-					onClick={handleOnclick}
+					onClick={handleSubmit}
 				/>
 			</div>
 		</div>

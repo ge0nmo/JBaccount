@@ -33,6 +33,7 @@
 	/* font weight */
 	--fw-bold: 500;
 	--fw-normal: 400;
+	--fw-num-bold: 600;
 	/* line-height */
 	--lh-normal: calc(var(--fs-normal)+8);
 	--lh-h1: calc(var(--fs-h1)+8);
@@ -429,6 +430,48 @@ header .header_button_wrap .header_links.active {
 	max-height: fit-content;
 	padding: 12px 0;
 }
+/* pagination */
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin: 48px 0;
+}
+.pagination .arrow {
+	width: 24px;
+	height: 24px;
+	background: url(../src/assets/arrow_pagination.svg) no-repeat 0 0;
+	font-size: 0;
+	overflow: hidden;
+	cursor: pointer;
+}
+.pagination .arrow.right {
+	transform: rotate(180deg);
+}
+.pagination .page_num {
+	display: flex;
+	margin: 0 16px;
+}
+.pagination .page_num .page_button {
+	width: 24px;
+	height: 24px;
+	margin-left: 8px;
+	border-radius: var(--br-sm);
+	text-align: center;
+	line-height: 24px;
+	font-family: "Roboto";
+	font-weight: var(--fw-num-bold);
+	cursor: pointer;
+}
+.pagination .page_num .page_button:first-child {
+	margin-left: 0;
+}
+.pagination .page_num .page_button:hover {
+	background: var(--primary-container-color);
+}
+.pagination .page_num .page_button.active {
+	background: var(--primary-color);
+	color: var(--white);
+}
 
 /* pages */
 /* input_box */
@@ -677,12 +720,12 @@ header .header_button_wrap .header_links.active {
 	margin-bottom: 48px;
 	border-bottom: 1px solid var(--border-color);
 }
-.board_input_title > input {
+.board_input_title input {
 	width: 100%;
 	font-size: var(--fs-h1);
 	border: 0 none;
 }
-.board_input_title > input::placeholder {
+.board_input_title input::placeholder {
 	font-family: "Noto Sans KR", sans-serif;
 	font-size: var(--fs-h1);
 	color: var(--border-color);
