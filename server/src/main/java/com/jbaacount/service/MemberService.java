@@ -75,7 +75,10 @@ public class MemberService
     {
         Member member = getMemberById(memberId);
 
-        return MemberMapper.INSTANCE.toMemberDetailResponse(member);
+        var data = MemberMapper.INSTANCE.toMemberDetailResponse(member);
+        data.setIsAdmin(member.getRoles().contains("ADMIN"));
+
+        return data;
     }
 
     public SliceDto<MemberDetailResponse> getAllMembers(String keyword, Long memberId, Pageable pageable)

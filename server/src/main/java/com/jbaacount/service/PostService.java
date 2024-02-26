@@ -121,15 +121,15 @@ public class PostService
 
     public Page<PostResponseForProfile> getMyPosts(Member member, Pageable pageable)
     {
+        log.info("member id = {}", member.toString());
         return postRepository.getPostsByMemberId(member.getId(), pageable);
     }
+
+    @Transactional
     public void deletePostById(Long postId, Member currentMember)
     {
         Post post = getPostById(postId);
         utilService.checkPermission(post.getMember().getId(), currentMember);
-
-        voteService.deleteVoteByPostId(postId);
-        fileService.deleteUploadedFile(post);
 
         postRepository.deleteById(postId);
     }
